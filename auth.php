@@ -23,7 +23,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-global $CFG;
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/authlib.php');
 require_once($CFG->dirroot . '/lib/filelib.php');
 
@@ -67,7 +68,13 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $leeloousername = $siteprefix . $username;
         $leelooemail = $siteprefix . $useremail;
 
-        $postdata = array('username' => $leeloousername, 'password' => $password, 'email' => $leelooemail, 'firstname' => $user->firstname, 'lastname' => $user->lastname . ' (' . $SITE->fullname . ')');
+        $postdata = array(
+            'username' => $leeloousername,
+            'password' => $password,
+            'email' => $leelooemail,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname . ' (' . $SITE->fullname . ')',
+        );
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/register';
         $curl = new curl;
