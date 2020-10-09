@@ -22,6 +22,8 @@
  * @author     Leeloo LXP <info@leeloolxp.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+global $CFG;
 require_once($CFG->libdir . '/authlib.php');
 require_once($CFG->dirroot . '/lib/filelib.php');
 
@@ -33,7 +35,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
     /**
      * Constructor
      */
-    function __construct() {
+    public function __construct() {
         $this->authtype = 'leeloo_pay_sso';
         $this->config = get_config('leeloo_pay_sso');
     }
@@ -46,24 +48,24 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      * @param string $password The password
      * @return bool Return true
      */
-    function user_authenticated_hook(&$user, $username, $password) {
+    public function user_authenticated_hook(&$user, $username, $password) {
 
         global $CFG;
         global $SITE;
 
-        $site_prefix = str_ireplace('https://', '', $CFG->wwwroot);
-        $site_prefix = str_ireplace('http://', '', $site_prefix);
-        $site_prefix = str_ireplace('www.', '', $site_prefix);
-        $site_prefix = str_ireplace('.', '_', $site_prefix);
-        $site_prefix = str_ireplace('/', '_', $site_prefix);
-        $site_prefix = $site_prefix . '_pre_';
+        $siteprefix = str_ireplace('https://', '', $CFG->wwwroot);
+        $siteprefix = str_ireplace('http://', '', $siteprefix);
+        $siteprefix = str_ireplace('www.', '', $siteprefix);
+        $siteprefix = str_ireplace('.', '_', $siteprefix);
+        $siteprefix = str_ireplace('/', '_', $siteprefix);
+        $siteprefix = $siteprefix . '_pre_';
 
         $username = $username;
         $password = $password;
-        $user_email = $user->email;
+        $useremail = $user->email;
 
-        $leeloousername = $site_prefix . $username;
-        $leelooemail = $site_prefix . $user_email;
+        $leeloousername = $siteprefix . $username;
+        $leelooemail = $siteprefix . $useremail;
 
         $postdata = array('username' => $leeloousername, 'password' => $password, 'email' => $leelooemail, 'firstname' => $user->firstname, 'lastname' => $user->lastname . ' (' . $SITE->fullname . ')');
 
@@ -101,10 +103,10 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $respose_arr = json_decode($response);
-        if (isset($respose_arr->session_id) && isset($respose_arr->session_id) != '') {
+        $resposearr = json_decode($response);
+        if (isset($resposearr->session_id) && isset($resposearr->session_id) != '') {
             global $SESSION;
-            $SESSION->jsession_id = $respose_arr->session_id;
+            $SESSION->jsession_id = $resposearr->session_id;
         }
 
         return true;
@@ -117,8 +119,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      * @param string $password is password
      * @return bool Authentication success or failure.
      */
-    function user_login($username, $password) {
+    public function user_login($username, $password) {
         return false;
     }
 }
-?>
