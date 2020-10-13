@@ -42,6 +42,24 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
     }
 
     /**
+     * Generate random string.
+     *
+     * @param int $strength is strength
+     * @return string $randomstring is random string
+     */
+    public function generate_string($strength = 16) {
+        $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $inputlength = strlen($input);
+        $randomstring = '';
+        for ($i = 0; $i < $strength; $i++) {
+            $randomcharacter = $input[mt_rand(0, $inputlength - 1)];
+            $randomstring .= $randomcharacter;
+        }
+
+        return $randomstring;
+    }
+
+    /**
      * Check if user authenticated
      *
      * @param string $user The userdata
@@ -51,8 +69,19 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      */
     public function user_authenticated_hook(&$user, $username, $password) {
 
+        $admins = get_admins();
+        $isadmin = false;
+        foreach ($admins as $admin) {
+            if ($user->id == $admin->id) {
+                $isadmin = true;
+                break;
+            }
+        }
+        if ($isadmin) {
+            return true;
+        }
+
         global $CFG;
-        global $SITE;
 
         $siteprefix = str_ireplace('https://', '', $CFG->wwwroot);
         $siteprefix = str_ireplace('http://', '', $siteprefix);
@@ -60,9 +89,10 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $siteprefix = str_ireplace('.', '_', $siteprefix);
         $siteprefix = str_ireplace('/', '_', $siteprefix);
         $siteprefix = $siteprefix . '_pre_';
+        $siteprefix = '';
 
         $username = $username;
-        $password = $password;
+        $password = $this->generate_string(8);
         $useremail = $user->email;
 
         $leeloousername = $siteprefix . $username;
@@ -73,7 +103,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'password' => $password,
             'email' => $leelooemail,
             'firstname' => $user->firstname,
-            'lastname' => $user->lastname . ' (' . $SITE->fullname . ')',
+            'lastname' => $user->lastname,
         );
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/register';
