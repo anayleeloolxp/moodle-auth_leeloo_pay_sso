@@ -38,7 +38,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      */
     public function __construct() {
         $this->authtype = 'leeloo_pay_sso';
-        $this->config = get_config('leeloo_pay_sso');
+        $this->config = get_config('auth_leeloo_pay_sso');
     }
 
     /**
@@ -128,7 +128,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $postdata = array('username' => $leeloousername, 'password' => $password);
+        $leeloolicense = $this->config->leeloo_license;
+
+        $postdata = array('username' => $leeloousername, 'password' => $password, 'leeloolicense' => $leeloolicense);
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/login';
         $curl = new curl;
