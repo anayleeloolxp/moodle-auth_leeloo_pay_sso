@@ -69,6 +69,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      */
     public function user_authenticated_hook(&$user, $username, $password) {
 
+        setcookie( 'jsession_id', '', time() + (86400), "/");
         $admins = get_admins();
         $isadmin = false;
         foreach ($admins as $admin) {
@@ -146,6 +147,11 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         if (isset($resposearr->session_id) && isset($resposearr->session_id) != '') {
             global $SESSION;
             $SESSION->jsession_id = $resposearr->session_id;
+
+            setcookie( 'jsession_id', $resposearr->session_id, time() + (86400), "/");
+
+        }else{
+            setcookie( 'jsession_id', '', time() + (86400), "/");
         }
 
         return true;
@@ -160,5 +166,13 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
      */
     public function user_login($username, $password) {
         return false;
+    }
+
+    /**
+     * Clear cookie on logout
+     *
+     */
+    public function postlogout_hook(){
+        setcookie( 'jsession_id', '', time() + (86400), "/");
     }
 }
