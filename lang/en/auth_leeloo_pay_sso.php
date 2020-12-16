@@ -26,7 +26,13 @@
 $string['auth_leeloo_pay_ssodescription'] = '<p>Sync users to your Leeloo LXP install automatically so users can purchase products using SSO.</p>';
 $string['auth_leeloo_pay_ssosettings'] = 'Settings';
 $string['pluginname'] = 'Leeloo LXP Payments SSO';
-$string['leeloo_license'] = 'Leeloo LXP Vendor ID';
+
+$string['vendorkey'] = 'Leeloo LXP Vendor Key';
+$string['vendorkey_help'] = 'Leeloo LXP Vendor Key';
+
+$string['nolicense'] = 'Invalid Leeloo LXP License ID';
+$string['novendor'] = 'Invalid Leeloo LXP Vendor Key';
+$string['license'] = 'Leeloo LXP License ID';
 
 // Privacy.
 $string['privacy:metadata'] = 'In order to integrate with Leeloo LXP, some user data need to be sent to the Leeloo LXP client application (remote system).';

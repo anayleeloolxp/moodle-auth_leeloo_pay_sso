@@ -26,9 +26,16 @@
 defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext(
-        'auth_leeloo_pay_sso/leeloo_license',
-        get_string('leeloo_license', 'auth_leeloo_pay_sso'),
-        get_string('leeloo_license', 'auth_leeloo_pay_sso'),
+        'auth_leeloo_pay_sso/license',
+        get_string('license', 'auth_leeloo_pay_sso'),
+        get_string('license', 'auth_leeloo_pay_sso'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'auth_leeloo_pay_sso/vendorkey',
+        get_string('vendorkey', 'auth_leeloo_pay_sso'),
+        get_string('vendorkey_help', 'auth_leeloo_pay_sso'),
         0
     ));
 }

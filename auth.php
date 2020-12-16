@@ -84,6 +84,59 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         global $CFG;
 
+        $useremail = $user->email;
+
+        $license = $this->config->license;
+
+        $postdata = '&license_key=' . $license;
+        $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
+        $curl = new curl;
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($postdata),
+        );
+
+        if (!$output = $curl->post($url, $postdata, $options)) {
+            return true;
+        }
+
+        $infoteamnio = json_decode($output);
+        if ($infoteamnio->status != 'false') {
+            $teamniourl = $infoteamnio->data->install_url;
+        } else {
+            return true;
+        }
+
+        $url = $teamniourl . '/admin/sync_moodle_course/check_user_by_email/' . $useremail;
+        $curl = new curl;
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($postdata),
+        );
+        if (!$output = $curl->post($url, $postdata, $options)) {
+            return true;
+        }
+
+        if ($output == '0') {
+            return true;
+        }
+
+        $url = $teamniourl . '/admin/sync_moodle_course/check_user_status_by_email/' . $useremail;
+        $curl = new curl;
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($postdata),
+        );
+        if (!$userstatusonteamnio = $curl->post($url, $postdata, $options)) {
+            return true;
+        }
+        if ($userstatusonteamnio == 0) {
+            return true;
+        }
+
         $siteprefix = str_ireplace('https://', '', $CFG->wwwroot);
         $siteprefix = str_ireplace('http://', '', $siteprefix);
         $siteprefix = str_ireplace('www.', '', $siteprefix);
@@ -129,7 +182,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $leeloolicense = $this->config->leeloo_license;
+        $leeloolicense = $this->config->vendorkey;
 
         $postdata = array('username' => $leeloousername, 'password' => $password, 'leeloolicense' => $leeloolicense);
 
