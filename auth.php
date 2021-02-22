@@ -226,6 +226,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
     /**
      * Clear cookie on logout
      *
+     * @param object $user is userdata
      */
     public function postlogout_hook($user) {
         setcookie('jsession_id', '', time() + (86400), "/");
