@@ -109,7 +109,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $url = $teamniourl . '/admin/sync_moodle_course/check_user_by_email/' . $useremail;
+        $url = $teamniourl . '/admin/sync_moodle_course/check_user_by_email/' . base64_encode($useremail);
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
@@ -124,7 +124,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $url = $teamniourl . '/admin/sync_moodle_course/check_user_status_by_email/' . $useremail;
+        $url = $teamniourl . '/admin/sync_moodle_course/check_user_status_by_email/' . base64_encode($useremail);
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
@@ -154,9 +154,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $leelooemail = $siteprefix . $useremail;
 
         $postdata = array(
-            'username' => $leeloousername,
+            'username' => base64_encode($leeloousername),
             'password' => $password,
-            'email' => $leelooemail,
+            'email' => base64_encode($leelooemail),
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
         );
@@ -171,7 +171,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $postdata = array('username' => $leeloousername, 'password' => $password);
+        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password);
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/changepass';
         $curl = new curl;
@@ -185,7 +185,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         $leeloolicense = $this->config->vendorkey;
 
-        $postdata = array('username' => $leeloousername, 'password' => $password, 'leeloolicense' => $leeloolicense);
+        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password, 'leeloolicense' => $leeloolicense);
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/login';
         $curl = new curl;

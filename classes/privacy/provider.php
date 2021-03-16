@@ -34,7 +34,8 @@ defined('MOODLE_INTERNAL') || die();
  *
  */
 class provider implements
-\core_privacy\local\metadata\provider {
+\core_privacy\local\metadata\provider,
+\core_privacy\local\request\data_provider {
 
     /**
      * Returns meta data about this system.
@@ -44,14 +45,16 @@ class provider implements
      */
     public static function get_metadata(collection $collection): collection {
         // Data collected by the client.
-        $collection->add_external_location_link(
-            'leeloo_pay_sso_client',
-            [
-                'fullname' => 'privacy:metadata:fullname',
-                'email' => 'privacy:metadata:email',
-            ],
-            'privacy:metadata'
-        );
+
+        $externalfields = [
+            'id' => 'privacy:metadata:id',
+            'username' => 'privacy:metadata:username',
+            'email' => 'privacy:metadata:email',
+            'fullname' => 'privacy:metadata:fullname',
+
+        ];
+
+        $collection->add_external_location_link('leeloo_pay_sso_client', $externalfields, 'privacy:metadata:leeloo_pay_sso');
 
         return $collection;
     }
