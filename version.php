@@ -30,3 +30,6 @@ $plugin->requires = 2014051200; // Requires this Moodle version.
 $plugin->component = 'auth_leeloo_pay_sso'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.0';
+$plugin->dependencies = array(
+    'auth_leeloolxp_tracking_sso' => 2021030901,
+);
