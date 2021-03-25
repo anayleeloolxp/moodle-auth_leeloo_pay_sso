@@ -138,20 +138,12 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
-        $siteprefix = str_ireplace('https://', '', $CFG->wwwroot);
-        $siteprefix = str_ireplace('http://', '', $siteprefix);
-        $siteprefix = str_ireplace('www.', '', $siteprefix);
-        $siteprefix = str_ireplace('.', '_', $siteprefix);
-        $siteprefix = str_ireplace('/', '_', $siteprefix);
-        $siteprefix = $siteprefix . '_pre_';
-        $siteprefix = '';
-
         $username = $username;
         $password = $this->generate_string(8);
         $useremail = $user->email;
 
-        $leeloousername = $siteprefix . $username;
-        $leelooemail = $siteprefix . $useremail;
+        $leeloousername = $username;
+        $leelooemail = $useremail;
 
         $postdata = array(
             'username' => base64_encode($leeloousername),

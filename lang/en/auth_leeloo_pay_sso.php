@@ -23,9 +23,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['auth_leeloo_pay_ssodescription'] = '<p>Sync users to your Leeloo LXP install automatically so users can purchase products using SSO.</p>';
+$string['auth_leeloo_pay_ssodescription'] = '<p>Sync users to your Leeloo LXP install automatically so users can access Leeloo Social.</p>';
 $string['auth_leeloo_pay_ssosettings'] = 'Settings';
-$string['pluginname'] = 'Leeloo LXP Payments SSO';
+$string['pluginname'] = 'Leeloo LXP Social SSO';
 
 $string['vendorkey'] = 'Leeloo LXP Vendor Key';
 $string['vendorkey_help'] = 'Leeloo LXP Vendor Key';
