@@ -177,7 +177,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         $leeloolicense = $this->config->vendorkey;
 
-        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password, 'leeloolicense' => $leeloolicense);
+        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password, 'leeloolicense' => $leeloolicense, 'siteid' => $user->id);
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/login';
         $curl = new curl;
