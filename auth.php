@@ -71,6 +71,11 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         setcookie('jsession_id', '', time() + (86400), "/");
         setcookie('license_key', '', time() + (86400), "/");
+
+        global $CFG;
+
+        setcookie('moodleurl', $CFG->wwwroot, time() + (86400), "/");
+
         $admins = get_admins();
         $isadmin = false;
         foreach ($admins as $admin) {
@@ -81,9 +86,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         }
         if ($isadmin) {
             return true;
-        }
-
-        global $CFG;
+        }    
 
         $useremail = $user->email;
 
