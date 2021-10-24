@@ -92,6 +92,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         $license = $this->config->license;
 
+        global $CFG;
+        require_once($CFG->dirroot . '/lib/filelib.php');
+
         $postdata = array('license_key' => $license);
         $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
         $curl = new curl;
