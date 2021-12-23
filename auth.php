@@ -202,6 +202,21 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
             setcookie('jsession_id', $resposearr->session_id, time() + (86400), "/");
             setcookie('license_key', $license, time() + (86400), "/");
+
+            global $DB;
+            $checksql = 'SELECT * FROM {auth_leeloolxp_tracking_sso} WHERE userid = ?';
+            $ssourls = $DB->get_record_sql($checksql, [$user->id]);
+
+            $jurl = 'https://leeloolxp.com/es-frame?session_id='.$resposearr->session_id.'&leeloolxplicense='.$license;
+
+            if ($ssourls) {
+                $sql = 'UPDATE {auth_leeloolxp_tracking_sso} SET jurl = ? WHERE userid = ?';
+                $DB->execute($sql, [$jurl, $user->id]);
+            } else {
+                $sql = 'INSERT INTO {auth_leeloolxp_tracking_sso} (userid, jurl, leeloourl) VALUES (?, ?, ?)';
+                $DB->execute($sql, [$user->id, $jurl, '']);
+            }
+
         } else {
             setcookie('jsession_id', '', time() + (86400), "/");
             setcookie('license_key', '', time() + (86400), "/");
