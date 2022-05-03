@@ -121,6 +121,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_RETURNTRANSFER' => true,
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
+            'CURLOPT_HTTPHEADER' => array(
+                'LeelooLXPToken: '.get_config('local_leeloolxpapi')->leelooapitoken.''
+            )
         );
         if (!$output = $curl->post($url, $postdata, $options)) {
             return true;
@@ -136,6 +139,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_RETURNTRANSFER' => true,
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
+            'CURLOPT_HTTPHEADER' => array(
+                'LeelooLXPToken: '.get_config('local_leeloolxpapi')->leelooapitoken.''
+            )
         );
         if (!$userstatusonteamnio = $curl->post($url, $postdata, $options)) {
             return true;
