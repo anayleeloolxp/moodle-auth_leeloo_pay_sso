@@ -27,8 +27,6 @@ namespace auth_leeloo_pay_sso\privacy;
 
 use core_privacy\local\metadata\collection;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Provider implementation for auth_leeloo_pay_sso.
  *

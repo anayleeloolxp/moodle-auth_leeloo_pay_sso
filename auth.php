@@ -189,7 +189,12 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
         $leeloolicense = $this->config->vendorkey;
 
-        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password, 'leeloolicense' => $leeloolicense, 'siteid' => $user->id);
+        $postdata = array(
+            'username' => base64_encode($leeloousername),
+            'password' => $password,
+            'leeloolicense' => $leeloolicense,
+            'siteid' => $user->id
+        );
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/login';
         $curl = new curl;
@@ -211,16 +216,25 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
 
             global $DB;
             $checksql = "SELECT * FROM {auth_leeloolxp_tracking_sso} WHERE userid = ?";
-            $ssourls = $DB->get_record_sql($checksql, [$user->id]);
+            $ssourls = $DB->get_record_sql(
+                $checksql,
+                [$user->id]
+            );
 
             $jurl = 'https://leeloolxp.com/es-frame?session_id=' . $resposearr->session_id . '&leeloolxplicense=' . $license;
 
             if ($ssourls) {
                 $sql = 'UPDATE {auth_leeloolxp_tracking_sso} SET jurl = ? WHERE userid = ?';
-                $DB->execute($sql, [$jurl, $user->id]);
+                $DB->execute(
+                    $sql,
+                    [$jurl, $user->id]
+                );
             } else {
                 $sql = 'INSERT INTO {auth_leeloolxp_tracking_sso} (userid, jurl, leeloourl) VALUES (?, ?, ?)';
-                $DB->execute($sql, [$user->id, $jurl, '']);
+                $DB->execute(
+                    $sql,
+                    [$user->id, $jurl, '']
+                );
             }
         } else {
             setcookie('jsession_id', '', time() + (86400), "/");
