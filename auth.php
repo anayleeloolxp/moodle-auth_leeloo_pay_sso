@@ -86,7 +86,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         }
         if ($isadmin) {
             return true;
-        }    
+        }
 
         $useremail = $user->email;
 
@@ -122,7 +122,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
             'CURLOPT_HTTPHEADER' => array(
-                'LeelooLXPToken: '.get_config('local_leeloolxpapi')->leelooapitoken.''
+                'LeelooLXPToken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
             )
         );
         if (!$output = $curl->post($url, $postdata, $options)) {
@@ -140,7 +140,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
             'CURLOPT_HTTPHEADER' => array(
-                'LeelooLXPToken: '.get_config('local_leeloolxpapi')->leelooapitoken.''
+                'LeelooLXPToken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
             )
         );
         if (!$userstatusonteamnio = $curl->post($url, $postdata, $options)) {
@@ -210,10 +210,10 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             setcookie('license_key', $license, time() + (86400), "/");
 
             global $DB;
-            $checksql = 'SELECT * FROM {auth_leeloolxp_tracking_sso} WHERE userid = ?';
+            $checksql = "SELECT * FROM {auth_leeloolxp_tracking_sso} WHERE userid = ?";
             $ssourls = $DB->get_record_sql($checksql, [$user->id]);
 
-            $jurl = 'https://leeloolxp.com/es-frame?session_id='.$resposearr->session_id.'&leeloolxplicense='.$license;
+            $jurl = 'https://leeloolxp.com/es-frame?session_id=' . $resposearr->session_id . '&leeloolxplicense=' . $license;
 
             if ($ssourls) {
                 $sql = 'UPDATE {auth_leeloolxp_tracking_sso} SET jurl = ? WHERE userid = ?';
@@ -222,7 +222,6 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
                 $sql = 'INSERT INTO {auth_leeloolxp_tracking_sso} (userid, jurl, leeloourl) VALUES (?, ?, ?)';
                 $DB->execute($sql, [$user->id, $jurl, '']);
             }
-
         } else {
             setcookie('jsession_id', '', time() + (86400), "/");
             setcookie('license_key', '', time() + (86400), "/");

@@ -34,8 +34,8 @@ defined('MOODLE_INTERNAL') || die();
  *
  */
 class provider implements
-\core_privacy\local\metadata\provider,
-\core_privacy\local\request\data_provider {
+    \core_privacy\local\metadata\provider,
+    \core_privacy\local\request\data_provider {
 
     /**
      * Returns meta data about this system.
