@@ -122,7 +122,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
             'CURLOPT_HTTPHEADER' => array(
-                'LeelooLXPToken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
+                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
             )
         );
         if (!$output = $curl->post($url, $postdata, $options)) {
@@ -140,7 +140,7 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
             'CURLOPT_HTTPHEADER' => array(
-                'LeelooLXPToken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
+                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
             )
         );
         if (!$userstatusonteamnio = $curl->post($url, $postdata, $options)) {
