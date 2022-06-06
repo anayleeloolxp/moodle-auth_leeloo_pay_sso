@@ -150,6 +150,8 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             return true;
         }
 
+        $leeloolicense = $this->config->vendorkey;
+
         $username = $username;
         $password = $this->generate_string(8);
         $useremail = $user->email;
@@ -163,37 +165,34 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
             'email' => base64_encode($leelooemail),
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
+            'leeloolicense' => $leeloolicense,
         );
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/register';
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HTTPHEADER' => array(
-                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
-            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
             return true;
         }
 
-        $postdata = array('username' => base64_encode($leeloousername), 'password' => $password);
+        $postdata = array(
+            'username' => base64_encode($leeloousername),
+            'password' => $password,
+            'leeloolicense' => $leeloolicense,
+        );
 
         $url = 'https://leeloolxp.com/api-leeloo/post/user/changepass';
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HTTPHEADER' => array(
-                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
-            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
             return true;
         }
-
-        $leeloolicense = $this->config->vendorkey;
 
         $postdata = array(
             'username' => base64_encode($leeloousername),
@@ -206,9 +205,6 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HTTPHEADER' => array(
-                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
-            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
