@@ -169,6 +169,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HTTPHEADER' => array(
+                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
+            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
@@ -181,6 +184,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HTTPHEADER' => array(
+                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
+            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
@@ -200,6 +206,9 @@ class auth_plugin_leeloo_pay_sso extends auth_plugin_base {
         $curl = new curl;
         $options = array(
             'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HTTPHEADER' => array(
+                'Leeloolxptoken: ' . get_config('local_leeloolxpapi')->leelooapitoken . ''
+            )
         );
 
         if (!$response = $curl->post($url, $postdata, $options)) {
